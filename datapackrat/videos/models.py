@@ -1,6 +1,15 @@
 from django.db import models
 
 from django_extensions.db.models import TimeStampedModel
+from django_extensions.db.fields import AutoSlugField
+
+
+class VideoCategory(TimeStampedModel):
+    name = models.CharField(max_length=25)
+    slug = AutoSlugField(populate_from=['name'])
+
+    def __str__(self):
+        return self.name
 
 class Video(TimeStampedModel):
     IN_QUEUE = 'in-queue'
@@ -20,6 +29,7 @@ class Video(TimeStampedModel):
         ('full30', 'Full 30')
     )
     target_type = models.CharField(max_length=25, choices=target_choices)
+    category = models.ForeignKey(VideoCategory, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.target

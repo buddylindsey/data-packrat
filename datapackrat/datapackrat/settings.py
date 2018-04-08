@@ -123,8 +123,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 
+
 # Application Settings
-DOWNLOAD_LOCATION = '~/Downloads/tmp/%(title)s.%(ext)s'
+DOWNLOAD_FOLDER = '~/Movies/Download/{category}/'
+DOWNLOAD_LOCATION = DOWNLOAD_FOLDER + '%(title)s.%(ext)s'
 
 # UTC Hour:Minutes (start_time, end_time)
 RUN_TIMES = ('4:00', '10:00')
