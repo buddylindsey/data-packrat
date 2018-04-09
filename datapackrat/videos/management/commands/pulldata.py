@@ -15,7 +15,6 @@ class Command(BaseCommand):
 
     def check_folders(self):
         for category in VideoCategory.objects.all():
-            print(category.slug)
             subprocess.run([
                 'mkdir', '-p', settings.DOWNLOAD_FOLDER.format(category=category.slug)
             ])
@@ -25,8 +24,9 @@ class Command(BaseCommand):
         if not can_run_task():
             return
 
-        command = ['youtube-dl', '-f', 'bestvideo+bestaudio',
-                   '--youtube-include-dash-manifest', '-o']
+        command = ['/usr/local/bin/youtube-dl', '-f', 'bestvideo+bestaudio',
+                   '--youtube-include-dash-manifest','--ffmpeg-location',
+                   '/usr/local/bin/ffmpeg', '--recode-video', 'mp4', '-o']
 
         for video in Video.objects.filter(status=Video.IN_QUEUE):
             if not can_run_task:
@@ -34,7 +34,7 @@ class Command(BaseCommand):
             run_command = command.copy()
             location = [
                 settings.DOWNLOAD_LOCATION.format(category=video.category.slug),
-                video.target
+                '"{}"'.format(video.target)
             ]
             result = subprocess.run(command + location)
             if result.returncode == 0:
