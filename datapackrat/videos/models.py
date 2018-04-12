@@ -3,6 +3,8 @@ from django.db import models
 from django_extensions.db.models import TimeStampedModel
 from django_extensions.db.fields import AutoSlugField
 
+import requests
+from bs4 import BeautifulSoup
 
 class VideoCategory(TimeStampedModel):
     name = models.CharField(max_length=25)
@@ -31,5 +33,20 @@ class Video(TimeStampedModel):
     target_type = models.CharField(max_length=25, choices=target_choices)
     category = models.ForeignKey(VideoCategory, on_delete=models.SET_NULL, null=True)
 
+    title = models.CharField(max_length=500, blank=True, help_text='Should Auto-populate if you don\'t fill it in.')
+
     def __str__(self):
         return self.target
+
+    def save(self, *args, **kwargs):
+
+        if self.target_type == 'video' or not self.target.startswith('http'):
+            return super().save(*args, **kwargs)
+
+        if not self.title:
+            response = requests.get(self.target)
+            soup = BeautifulSoup(response.content, 'html.parser')
+
+            self.title = soup.find('title').contents[0]
+
+        return super().save(*args, **kwargs)

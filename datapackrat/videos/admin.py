@@ -4,7 +4,7 @@ from .models import Video, VideoCategory
 
 @admin.register(Video)
 class VideoAdmin(admin.ModelAdmin):
-    list_display = ('target', 'status', 'target_type')
+    list_display = ('title', 'target', 'status', 'target_type')
     list_filter = ('status', 'target_type')
 
 @admin.register(VideoCategory)
