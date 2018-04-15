@@ -13,7 +13,8 @@ class VideoCategory(TimeStampedModel):
     def __str__(self):
         return self.name
 
-class Video(TimeStampedModel):
+
+class DownloadBase(TimeStampedModel):
     IN_QUEUE = 'in-queue'
     COMPLETED = 'completed'
     ERROR = 'error'
@@ -38,8 +39,8 @@ class Video(TimeStampedModel):
         max_length=500, blank=True,
         help_text='Should Auto-populate if you don\'t fill it in.')
 
-    def __str__(self):
-        return self.target
+    class Meta:
+        abstract = True
 
     def save(self, *args, **kwargs):
 
@@ -53,3 +54,12 @@ class Video(TimeStampedModel):
             self.title = soup.find('title').contents[0]
 
         return super().save(*args, **kwargs)
+
+
+class Video(DownloadBase):
+    def __str__(self):
+        return self.target
+
+
+class Playlist(DownloadBase):
+    slug = AutoSlugField(populate_from=['title'])

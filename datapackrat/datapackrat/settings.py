@@ -126,7 +126,8 @@ STATIC_URL = '/static/'
 
 # Application Settings
 DOWNLOAD_FOLDER = '~/Movies/Downloads/{category}/'
-DOWNLOAD_LOCATION = DOWNLOAD_FOLDER + '%(title)s.%(ext)s'
+DOWNLOAD_FILE_FORMAT = '%(title)s.%(ext)s'
+DOWNLOAD_LOCATION = DOWNLOAD_FOLDER + DOWNLOAD_FILE_FORMAT
 
 # UTC Hour:Minutes (start_time, end_time)
 RUN_TIMES = ('4:00', '10:00')
