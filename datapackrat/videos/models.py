@@ -31,9 +31,12 @@ class Video(TimeStampedModel):
         ('full30', 'Full 30')
     )
     target_type = models.CharField(max_length=25, choices=target_choices)
-    category = models.ForeignKey(VideoCategory, on_delete=models.SET_NULL, null=True)
+    category = models.ForeignKey(
+        VideoCategory, on_delete=models.SET_NULL, null=True)
 
-    title = models.CharField(max_length=500, blank=True, help_text='Should Auto-populate if you don\'t fill it in.')
+    title = models.CharField(
+        max_length=500, blank=True,
+        help_text='Should Auto-populate if you don\'t fill it in.')
 
     def __str__(self):
         return self.target
