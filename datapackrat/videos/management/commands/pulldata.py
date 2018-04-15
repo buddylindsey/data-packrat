@@ -13,14 +13,7 @@ class Command(BaseCommand):
     # def add_arguments(self, parser):
     #     parser.add_argument('poll_id', nargs='+', type=int)
 
-    def check_folders(self):
-        for category in VideoCategory.objects.all():
-            subprocess.run([
-                'mkdir', '-p', settings.DOWNLOAD_FOLDER.format(category=category.slug)
-            ])
-
     def handle(self, *args, **options):
-        self.check_folders()
         if not can_run_task():
             return
 
@@ -34,7 +27,7 @@ class Command(BaseCommand):
             run_command = command.copy()
             location = [
                 settings.DOWNLOAD_LOCATION.format(category=video.category.slug),
-                '"{}"'.format(video.target)
+                '{}'.format(video.target)
             ]
             result = subprocess.run(command + location)
             if result.returncode == 0:
