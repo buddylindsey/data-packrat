@@ -131,3 +131,7 @@ DOWNLOAD_LOCATION = DOWNLOAD_FOLDER + DOWNLOAD_FILE_FORMAT
 
 # UTC Hour:Minutes (start_time, end_time)
 RUN_TIMES = ('4:00', '10:00')
+
+YOUTUBE_API_KEY = os.environ.get('YOUTUBE_API_KEY', '')
+YOUTUBE_VIDEO_URL = "https://www.googleapis.com/youtube/v3/videos?part=snippet&id={id}&key={api_key}"
+YOUTUBE_PLAYLIST_URL = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId={id}&key={api_key}"
