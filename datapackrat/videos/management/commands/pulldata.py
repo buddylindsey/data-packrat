@@ -13,6 +13,16 @@ class Command(BaseCommand):
     # def add_arguments(self, parser):
     #     parser.add_argument('poll_id', nargs='+', type=int)
 
+    def get_location(self, video):
+        location = settings.DOWNLOAD_FOLDER.format(category=video.category.slug)
+
+        if video.playlist:
+            location += '{}/'.format(video.playlist.slug)
+
+        location += settings.DOWNLOAD_FILE_FORMAT
+
+        return location
+
     def handle(self, *args, **options):
         if not can_run_task():
             return
@@ -25,10 +35,9 @@ class Command(BaseCommand):
             if not can_run_task:
                 break
             run_command = command.copy()
-            location = [
-                settings.DOWNLOAD_LOCATION.format(category=video.category.slug),
-                '{}'.format(video.target)
-            ]
+
+            location = [ self.get_location(video), '{}'.format(video.target) ]
+
             result = subprocess.run(command + location)
             if result.returncode == 0:
                 video.status = Video.COMPLETED
