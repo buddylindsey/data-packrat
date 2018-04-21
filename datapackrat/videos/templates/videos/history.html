@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-header">
+                History of Video Downloads
+            </div>
+            <div class="card-body">
+                <ul>
+                    {% for video in videos %}
+                    <li>{{ video.title }}</li>
+                    {% else %}
+                    <li>No videos have been added.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

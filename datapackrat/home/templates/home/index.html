@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                Last 10 Videos Downloaded
+            </div>
+            <div class="card-body">
+                <ul>
+                    {% for video in latest_downloaded_videos %}
+                    <li>{{ video.title }}</li>
+                    {% else %}
+                    <li>No Downloads Have Finished</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">Totals</div>
+            <div class="card-body">
+                In Queue: {{ video_in_queue }}<br />
+                Completed: {{ video_completed }}<br />
+                Errored: {{ video_errored }}<br />
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Data PackRat</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{ static('main.css') }}" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="sidebar-wrapper">
+                <h1>Data PackRat</h1>
+                <hr />
+                <div class="sidebar-nav">
+                    <ul class="nav">
+                        <li class="nav-link"><i class="fa fa-tachometer" aria-hidden="true"></i><a href="{{ url('index') }}">Dashboard</a></li>
+                        <li class="nav-link"><i class="fa fa-video-camera" aria-hidden="true"></i><a href="{{ url('video_history') }}">Video History</a></li>
+                        <li class="nav-link"><i class="fa fa-calendar" aria-hidden="true"></i><a href="#">Schedules</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="main-panel">
+                <div class="main-panel-wrapper">
+                    <div class="container-fluid">
+                    {% block content %}
+                    {% endblock %}
+                    </div>
+                </div>
+                <footer class="footer">
+                    Licensed Under MIT contributions welcome at https://github.com/buddylindsey/data-packrat
+                </footer>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    </body>
+</html>

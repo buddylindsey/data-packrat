@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
-    'videos'
+    'videos',
+    'django_jinja',
+    'home'
 ]
 
 MIDDLEWARE = [
@@ -54,6 +56,31 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'datapackrat.urls'
 
 TEMPLATES = [
+    {
+        "BACKEND": "django_jinja.backend.Jinja2",
+        "DIRS": [os.path.join(BASE_DIR, 'templates')],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "match_extension": ".html",
+            "match_regex": r"^(?!admin/).*",
+            "app_dirname": "templates",
+            "autoescape": True,
+            "auto_reload": DEBUG,
+            "extensions": [
+                "jinja2.ext.do",
+                "jinja2.ext.loopcontrols",
+                "jinja2.ext.with_",
+                "jinja2.ext.i18n",
+                "jinja2.ext.autoescape",
+                "django_jinja.builtins.extensions.CsrfExtension",
+                "django_jinja.builtins.extensions.CacheExtension",
+                "django_jinja.builtins.extensions.TimezoneExtension",
+                "django_jinja.builtins.extensions.UrlsExtension",
+                "django_jinja.builtins.extensions.StaticFilesExtension",
+                "django_jinja.builtins.extensions.DjangoFiltersExtension",
+            ],
+        }
+    },
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
@@ -121,6 +148,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
 
 
