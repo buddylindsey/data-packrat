@@ -28,10 +28,11 @@ class DownloadBase(TimeStampedModel):
     status = models.CharField(
         max_length=25, choices=target_status, default=IN_QUEUE)
     target = models.CharField(max_length=1000)
+    TARGET_YOUTUBE = 'youtube'
+    TARGET_VIDEO = 'video'
     target_choices = (
-        ('video', 'Video'),
-        ('youtube', 'YouTube'),
-        ('full30', 'Full 30')
+        (TARGET_VIDEO, 'Video'),
+        (TARGET_YOUTUBE, 'YouTube')
     )
     target_type = models.CharField(max_length=25, choices=target_choices)
     category = models.ForeignKey(

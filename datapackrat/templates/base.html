@@ -17,13 +17,25 @@
                 <div class="sidebar-nav">
                     <ul class="nav">
                         <li class="nav-link"><i class="fa fa-tachometer" aria-hidden="true"></i><a href="{{ url('index') }}">Dashboard</a></li>
-                        <li class="nav-link"><i class="fa fa-video-camera" aria-hidden="true"></i><a href="{{ url('video_history') }}">Video History</a></li>
+                        <li class="nav-link"><i class="fa fa-video-camera" aria-hidden="true"></i><a href="{{ url('video_downloads') }}">Video Downloads</a></li>
                         <li class="nav-link"><i class="fa fa-calendar" aria-hidden="true"></i><a href="#">Schedules</a></li>
                     </ul>
                 </div>
             </div>
             <div class="main-panel">
                 <div class="main-panel-wrapper">
+                    <nav class="navbar navbar-expand-lg navbar-light bg-light nav-main-panel">
+                        <a class="navbar-brand brand-page-title" href="#">{% block navtitle %}Dashboard{% endblock %}</a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav">
+                                {% block navlinks %}
+                                {% endblock %}
+                            </ul>
+                        </div>
+                    </nav>
                     <div class="container-fluid">
                     {% block content %}
                     {% endblock %}

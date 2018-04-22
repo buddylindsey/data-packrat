@@ -87,3 +87,13 @@
     background-color: #FFFFFF;
     height: 60px;
 }
+
+.nav-main-panel {
+    border-bottom: lightgray 1px solid;
+    background-color: white !important;
+    margin: 0px 0px 20px 0px;
+}
+
+.nav-main-panel .brand-page-title {
+    font-weight: 100;
+}

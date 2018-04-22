@@ -3,7 +3,8 @@ from django.views.generic import ListView
 from .models import Video
 
 
-class VideoHistoryView(ListView):
+class VideoDownloadsView(ListView):
     model = Video
     context_object_name = 'videos'
-    template_name = 'videos/history.html'
+    template_name = 'videos/downloads.html'
+    ordering = ('-id')
