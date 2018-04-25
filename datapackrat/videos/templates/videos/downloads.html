@@ -7,10 +7,10 @@
     <a class="nav-link" href="{{ url('video_downloads') }}">History</a>
 </li>
 <li class="nav-item">
-    <a class="nav-link" href="#">Add Video</a>
+    <a class="nav-link" href="{{ url('video_add') }}">Add Video</a>
 </li>
 <li class="nav-item">
-    <a class="nav-link" href="#">Add Playlist</a>
+    <a class="nav-link" href="{{ url('playlist_add') }}">Add Playlist</a>
 </li>
 {% endblock %}
 
@@ -18,7 +18,7 @@
 <div class="row">
     <div class="col">
         <div class="card">
-            <div class="card-header">
+            <div class="card-header dp-card-header">
                 History of Video Downloads
             </div>
             <div class="card-body">
@@ -30,6 +30,7 @@
                             <th scope="col">Target</th>
                             <th scope="col">Status</th>
                             <th scope="col">Playlist</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -48,6 +49,7 @@
                             {% else %}
                             <td></td>
                             {% endif %}
+                            <td><a href="{{ url("video_edit", video.id) }}"><i class="fa fa-edit"></i></a></td>
                         </tr>
                         {% endfor %}
                     </tbody>

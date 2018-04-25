@@ -97,3 +97,13 @@
 .nav-main-panel .brand-page-title {
     font-weight: 100;
 }
+
+.dp-card-header {
+    background-color: white;
+    font-weight: 100;
+    border-bottom: 0px;
+}
+
+table thead tr th {
+    font-weight: 100;
+}

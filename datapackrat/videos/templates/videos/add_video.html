@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block navtitle %}Video Downloads{% endblock %}
+
+{% block navlinks %}
+<li class="nav-item">
+    <a class="nav-link" href="{{ url('video_downloads') }}">History</a>
+</li>
+<li class="nav-item active">
+    <a class="nav-link" href="{{ url('video_add') }}">Add Video</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ url('playlist_add') }}">Add Playlist</a>
+</li>
+{% endblock %}
+
+
+{% block content %}
+<div class="card">
+    <div class="card-header dp-card-header">
+        Add/Edit Video
+    </div>
+    <div class="card-body">
+        <form action="" method="post">{% csrf_token %}
+            {{ form.as_p() }}
+            <input type="submit" value="Add Video" />
+        </form>
+    </div>
+</div>
+{% endblock %}
