@@ -7,6 +7,8 @@ from videos.models import Video, VideoCategory
 
 from utils.dates import can_run_task
 
+import youtube_dl
+
 class Command(BaseCommand):
     help = 'Pull data down from the internet based on what is in the database'
 
@@ -27,21 +29,28 @@ class Command(BaseCommand):
         if not can_run_task():
             return
 
-        command = ['/usr/local/bin/youtube-dl', '-f', 'bestvideo+bestaudio',
-                   '--youtube-include-dash-manifest','--ffmpeg-location',
-                   '/usr/local/bin/ffmpeg', '--recode-video', 'mp4', '-o']
+        ydl_opts = {
+            'format': 'bestvideo+bestaudio',
+            'writesubtitles': True,
+            'subtitlesformat': 'srt',
+            'ffmpeg_location': settings.FFMPEG_LOCATION,
+            'prefer_ffmpeg': True,
+            'postprocessors': [
+                { 'key': 'FFmpegVideoConvertor', 'preferedformat': 'mp4' },
+                { 'key': 'FFmpegMetadata' }
+            ],
+        }
 
         for video in Video.objects.filter(status=Video.IN_QUEUE):
-            if not can_run_task:
+            if not can_run_task():
                 break
-            run_command = command.copy()
 
-            location = [ self.get_location(video), '{}'.format(video.target) ]
+            ydl_opts['outtmpl'] = self.get_location(video)
 
-            result = subprocess.run(command + location)
-            if result.returncode == 0:
+            try:
+                with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+                    ydl.download([video.target])
                 video.status = Video.COMPLETED
-            else:
+            except:
                 video.status = Video.ERROR
-
             video.save()

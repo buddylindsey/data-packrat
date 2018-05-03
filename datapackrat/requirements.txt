@@ -9,3 +9,4 @@ ipdb==0.11
 ipython==6.3.1
 Jinja2==2.10
 requests==2.18.4
+youtube-dl==2018.5.1

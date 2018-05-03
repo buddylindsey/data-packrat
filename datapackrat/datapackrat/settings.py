@@ -155,8 +155,9 @@ STATICFILES_DIRS = (
 
 
 # Application Settings
-DOWNLOAD_FOLDER = '~/Movies/Downloads/{category}/'
-DOWNLOAD_FILE_FORMAT = '%(title)s.%(ext)s'
+DOWNLOAD_BASE = '~/Movies/Downloads/{category}'
+DOWNLOAD_FOLDER = '{}/%(uploader)s/'.format(DOWNLOAD_BASE)
+DOWNLOAD_FILE_FORMAT = '%(uploader)s - %(title)s.%(ext)s'
 DOWNLOAD_LOCATION = DOWNLOAD_FOLDER + DOWNLOAD_FILE_FORMAT
 
 # UTC Hour:Minutes (start_time, end_time)
@@ -165,3 +166,5 @@ RUN_TIMES = ('2:30', '10:00')
 YOUTUBE_API_KEY = os.environ.get('YOUTUBE_API_KEY', '')
 YOUTUBE_VIDEO_URL = "https://www.googleapis.com/youtube/v3/videos?part=snippet&id={id}&key={api_key}"
 YOUTUBE_PLAYLIST_URL = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId={id}&key={api_key}"
+
+FFMPEG_LOCATION = os.environ.get('FFMPEG_LOCATION', '/usr/local/bin/ffmpeg')
