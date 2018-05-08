@@ -166,5 +166,6 @@ RUN_TIMES = ('2:30', '10:00')
 YOUTUBE_API_KEY = os.environ.get('YOUTUBE_API_KEY', '')
 YOUTUBE_VIDEO_URL = "https://www.googleapis.com/youtube/v3/videos?part=snippet&id={id}&key={api_key}"
 YOUTUBE_PLAYLIST_URL = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId={id}&key={api_key}"
+YOUTUBE_CHANNEL_URL = "https://www.googleapis.com/youtube/v3/search?part=snippet&key={api_key}&channelId={channel_id}&part=snippet,id&order=date&maxResults=5"
 
 FFMPEG_LOCATION = os.environ.get('FFMPEG_LOCATION', '/usr/local/bin/ffmpeg')

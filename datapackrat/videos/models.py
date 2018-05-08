@@ -104,3 +104,22 @@ class Playlist(DownloadBase):
                 target_type=self.target_type,
                 status=self.status)
             self.videos.add(video)
+
+
+class Channel(TimeStampedModel):
+    target = models.CharField(max_length=1000)
+    TARGET_YOUTUBE = 'youtube'
+    target_choices = (
+        (TARGET_YOUTUBE, 'YouTube'),
+    )
+    target_type = models.CharField(max_length=25, choices=target_choices)
+    slug = AutoSlugField(populate_from=['title'])
+    category = models.ForeignKey(
+        VideoCategory, on_delete=models.SET_NULL, null=True)
+    title = models.CharField(
+        max_length=500, blank=True,
+        help_text='Should Auto-populate if you don\'t fill it in.')
+    paused = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.title

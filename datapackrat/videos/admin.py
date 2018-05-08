@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Playlist, Video, VideoCategory
+from .models import Channel, Playlist, Video, VideoCategory
 
 
 @admin.register(Video)
@@ -38,3 +38,8 @@ class PlaylistAdmin(admin.ModelAdmin):
             return 'Errored'
 
         return 'In Queue'
+
+
+@admin.register(Channel)
+class ChannelAdmin(admin.ModelAdmin):
+    pass
