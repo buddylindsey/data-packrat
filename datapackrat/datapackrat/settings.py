@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+    'django_celery_beat',
     'videos',
     'django_jinja',
     'home'
@@ -169,3 +170,5 @@ YOUTUBE_PLAYLIST_URL = "https://www.googleapis.com/youtube/v3/playlistItems?part
 YOUTUBE_CHANNEL_URL = "https://www.googleapis.com/youtube/v3/search?part=snippet&key={api_key}&channelId={channel_id}&part=snippet,id&order=date&maxResults=5"
 
 FFMPEG_LOCATION = os.environ.get('FFMPEG_LOCATION', '/usr/local/bin/ffmpeg')
+
+CELERY_BROKER_URL = 'redis://localhost:6379/5'

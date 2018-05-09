@@ -1,6 +1,7 @@
 import requests
 
 from django.conf import settings
+from celery import shared_task
 
 from .models import  Channel, Video
 
@@ -30,3 +31,8 @@ class LatestChannelVideo:
                     video.category = channel.category
                     video.title = v['snippet']['title']
                     video.save()
+
+@shared_task
+def find_latest_channel_videos():
+    lcv = LatestChannelVideo()
+    lcv.run()
