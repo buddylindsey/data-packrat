@@ -4,8 +4,9 @@ import youtube_dl
 from django.conf import settings
 from celery import shared_task
 
-from videos.models import Video, VideoCategory
-from .models import  Channel, Video
+from videos.models import Video, VideoCategory, Channel
+from notifications.models import Message
+
 
 
 class GetSingleVideo:
@@ -93,6 +94,9 @@ class LatestChannelVideo:
                     video.category = channel.category
                     video.title = v['snippet']['title']
                     video.save()
+                    msg = "{} added to channel {}".format(
+                        video.title, channel.title)
+                    Message.objects.create(message=msg)
 
 @shared_task
 def find_latest_channel_videos():

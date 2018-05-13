@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django_celery_beat',
     'videos',
     'django_jinja',
-    'home'
+    'home',
+    'notifications'
 ]
 
 MIDDLEWARE = [

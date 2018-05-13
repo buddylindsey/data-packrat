@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block navtitle %}Notifications{% endblock %}
+
+{% block navlinks %}
+<li class="nav-item active">
+    <a class="nav-link" href="{{ url('notifications') }}">Index</a>
+</li>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-header dp-card-header">
+                Messages
+                <div>
+                    <form action="{{ url("mark_as_read") }}" method="POST">{% csrf_token %}
+                        <input type="submit" value="Mark as Read" />
+                    </form>
+                </div>
+            </div>
+            <div class="card-body">
+                <ul>
+                    {% for message in messages %}
+                    <li>{{ message.message }}</li>
+                    {% else %}
+                    <li>No Messages</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
