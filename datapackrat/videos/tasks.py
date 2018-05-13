@@ -24,7 +24,22 @@ class GetSingleVideo:
 
         return location
 
+    def can_download(self):
+        # if we are foceing a download it doesn't matter what the status
+        if self.force == True:
+            return True
+
+        # if we aren't forcing the video then we only want to download in queue
+        if self.video.status == Video.IN_QUEUE:
+            return True
+
+        # if we don't have permission above we don't download
+        return False
+
     def run(self):
+        if not self.can_download():
+            return
+
         ydl_opts = {
             'format': 'bestvideo+bestaudio',
             'writesubtitles': True,
