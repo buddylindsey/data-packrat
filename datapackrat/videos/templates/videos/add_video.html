@@ -27,4 +27,17 @@
         </form>
     </div>
 </div>
+{% if video %}
+<div class="card">
+    <div class="card-header dp-card-header">
+        Video Actions
+    </div>
+    <div class="card-body">
+        <form action="{{ url('force_download') }}" method="post">{% csrf_token %}
+            <input type="hidden" value="{{ video.id }}" name="video_id" />
+            <input type="submit" value="Force Download" />
+        </form>
+    </div>
+</div>
+{% endif %}
 {% endblock %}
