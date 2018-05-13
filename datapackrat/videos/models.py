@@ -97,12 +97,15 @@ class Playlist(DownloadBase):
         super().save(*args, **kwargs)
 
         for item in self.get_playlist_videos():
-            video = Video.objects.create(
-                title=item['snippet']['title'],
-                target=item['snippet']['resourceId']['videoId'],
-                category=self.category,
-                target_type=self.target_type,
-                status=self.status)
+            video, created = Video.objects.get_or_create(
+                target=item['snippet']['resourceId']['videoId'])
+
+            if created:
+                video.title = item['snippet']['title']
+                video.category = self.category
+                video.target_type = self.target_type
+                video.status = self.status
+                video.save()
             self.videos.add(video)
 
 
