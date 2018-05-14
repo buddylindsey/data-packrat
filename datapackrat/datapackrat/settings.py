@@ -79,7 +79,7 @@ TEMPLATES = [
                 "django_jinja.builtins.extensions.TimezoneExtension",
                 "django_jinja.builtins.extensions.UrlsExtension",
                 "django_jinja.builtins.extensions.StaticFilesExtension",
-                "django_jinja.builtins.extensions.DjangoFiltersExtension",
+                "django_jinja.builtins.extensions.DjangoFiltersExtension"
             ],
         }
     },
