@@ -13,9 +13,13 @@
         <div class="wrapper">
             <div class="sidebar-wrapper">
                 <h1>Data PackRat</h1>
+
                 <hr />
                 <div class="sidebar-nav">
                     <ul class="nav">
+                        {% if notification_count() %}
+                        <li class="nav-link"><span class="alert alert-danger alert-notification">{{ notification_count() }}</span><a href="{{ url('notifications') }}">Notifications</a></li>
+                        {% endif %}
                         <li class="nav-link"><i class="fa fa-tachometer" aria-hidden="true"></i><a href="{{ url('index') }}">Dashboard</a></li>
                         <li class="nav-link"><i class="fa fa-video-camera" aria-hidden="true"></i><a href="{{ url('video_downloads') }}">Video Downloads</a></li>
                         <li class="nav-link"><i class="fa fa-calendar" aria-hidden="true"></i><a href="#">Schedules</a></li>

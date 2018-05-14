@@ -107,3 +107,8 @@
 table thead tr th {
     font-weight: 100;
 }
+
+.alert-notification {
+    padding: 3px 8px;
+    margin: 0px 18px 0px 2px;
+}
