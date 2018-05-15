@@ -13,7 +13,10 @@ class VideoForm(forms.ModelForm):
 class PlaylistForm(forms.ModelForm):
     class Meta:
         model = Playlist
-        fields = ['status', 'target', 'target_type', 'category', 'title']
+        fields = [
+            'status', 'target', 'target_type', 'category', 'title',
+            'subscribed', 'download'
+        ]
 
 
 class ForceDownloadForm(forms.Form):

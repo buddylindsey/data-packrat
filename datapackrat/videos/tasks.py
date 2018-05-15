@@ -4,7 +4,7 @@ import youtube_dl
 from django.conf import settings
 from celery import shared_task
 
-from videos.models import Video, VideoCategory, Channel
+from videos.models import Video, VideoCategory, Channel, Playlist
 from notifications.models import Message
 
 
@@ -94,7 +94,7 @@ class LatestChannelVideo:
                     video.category = channel.category
                     video.title = v['snippet']['title']
                     video.save()
-                    msg = "{} added to channel {}".format(
+                    msg = '"{}" added to channel "{}"'.format(
                         video.title, channel.title)
                     Message.objects.create(message=msg)
 
@@ -102,6 +102,49 @@ class LatestChannelVideo:
 def find_latest_channel_videos():
     lcv = LatestChannelVideo()
     lcv.run()
+
+
+class LatestPlaylistVideo:
+    def get_playlist_videos(self, target, page=None):
+        videos = []
+
+        url = settings.YOUTUBE_PLAYLIST_URL.format(
+            id=target, api_key=settings.YOUTUBE_API_KEY)
+        if page:
+            url += "&pageToken={page}".format(page=page)
+
+        response = requests.get(url)
+
+        data = response.json()
+
+        if 'nextPageToken' in data:
+            videos += self.get_playlist_videos(target, page=data['nextPageToken'])
+
+        return videos + data['items']
+
+    def run(self):
+        for playlist in Playlist.objects.filter(subscribed=True):
+            for item in self.get_playlist_videos(playlist.target):
+                video, created = Video.objects.get_or_create(
+                    target=item['snippet']['resourceId']['videoId'])
+
+                if created:
+                    video.title = item['snippet']['title']
+                    video.category = playlist.category
+                    video.target_type = playlist.target_type
+                    video.status = playlist.status
+                    video.save()
+                    msg = '"{}" added from playlist "{}"'.format(
+                        video.title, playlist.title)
+                    Message.objects.create(message=msg)
+
+                playlist.videos.add(video)
+
+
+@shared_task
+def find_latest_playlist_videos():
+    lplv = LatestPlaylistVideo()
+    lplv.run()
 
 
 class PullVideoData:

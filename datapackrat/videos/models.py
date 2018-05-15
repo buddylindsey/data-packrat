@@ -70,6 +70,14 @@ class Video(DownloadBase):
 
 class Playlist(DownloadBase):
     slug = AutoSlugField(populate_from=['title'])
+    subscribed = models.BooleanField(
+        default=False,
+        help_text='Continue to download new vidoes added to this playlist'
+    )
+    download = models.BooleanField(
+        default=True,
+        help_text='Download all the videos in the playlist when added'
+    )
 
     def get_playlist_videos(self, page=None):
         videos = []
@@ -78,7 +86,6 @@ class Playlist(DownloadBase):
             id=self.target, api_key=settings.YOUTUBE_API_KEY)
         if page:
             url += "&pageToken={page}".format(page=page)
-            print(url)
 
         response = requests.get(url)
 
@@ -91,10 +98,12 @@ class Playlist(DownloadBase):
 
     def save(self, *args, **kwargs):
         if self.id:
-            super().save(*args, **kwargs)
-            return
+            return super().save(*args, **kwargs)
 
-        super().save(*args, **kwargs)
+        playlist = super().save(*args, **kwargs)
+
+        if not self.download:
+            return playlist
 
         for item in self.get_playlist_videos():
             video, created = Video.objects.get_or_create(
@@ -107,6 +116,8 @@ class Playlist(DownloadBase):
                 video.status = self.status
                 video.save()
             self.videos.add(video)
+
+        return playlist
 
 
 class Channel(TimeStampedModel):
