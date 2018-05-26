@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'videos',
     'django_jinja',
     'home',
-    'notifications'
+    'notifications',
+    'settings'
 ]
 
 MIDDLEWARE = [
