@@ -15,15 +15,14 @@ class GetSingleVideo:
         self.force = force
 
     def get_location(self):
-        location = settings.DOWNLOAD_FOLDER.format(
-            category=self.video.category.slug)
+        string_kwargs = {
+            'category': self.video.category and self.video.category.slug or '',
+            'playlist_slug': self.video.playlist and self.video.playlist.slug or ''
+        }
 
-        if self.video.playlist:
-            location += '{}/'.format(self.video.playlist.slug)
+        location = self.video.name_template.template().format(**string_kwargs)
 
-        location += settings.DOWNLOAD_FILE_FORMAT
-
-        return location
+        return settings.DOWNLOAD_BASE + location
 
     def can_download(self):
         # if we are foceing a download it doesn't matter what the status
@@ -93,6 +92,7 @@ class LatestChannelVideo:
                     video.target_type = Video.TARGET_YOUTUBE
                     video.category = channel.category
                     video.title = v['snippet']['title']
+                    video.name_template = channel.name_template
                     video.save()
                     msg = '"{}" added to channel "{}"'.format(
                         video.title, channel.title)
@@ -133,6 +133,7 @@ class LatestPlaylistVideo:
                     video.category = playlist.category
                     video.target_type = playlist.target_type
                     video.status = playlist.status
+                    video.name_template = playlist.name_template
                     video.save()
                     msg = '"{}" added from playlist "{}"'.format(
                         video.title, playlist.title)

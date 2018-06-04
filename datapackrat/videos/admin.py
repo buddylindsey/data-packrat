@@ -26,7 +26,6 @@ class PlaylistAdmin(admin.ModelAdmin):
 
     def download_status(self, obj):
         status = []
-        status
 
         for video in obj.videos.all():
             status.append(video.status == Video.COMPLETED)

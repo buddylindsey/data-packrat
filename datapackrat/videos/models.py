@@ -15,14 +15,24 @@ class VideoCategory(TimeStampedModel):
     def __str__(self):
         return self.name
 
+class NameTemplateModel(models.Model):
+    name_template = models.ForeignKey(
+        'settings.DownloadTemplate', null=True, blank=True,
+        on_delete=models.SET_NULL)
 
-class DownloadBase(TimeStampedModel):
+    class Meta:
+        abstract = True
+
+
+class DownloadBase(NameTemplateModel, TimeStampedModel):
     IN_QUEUE = 'in-queue'
     COMPLETED = 'completed'
     ERROR = 'error'
+    SKIP = 'skip'
     target_status = (
         (IN_QUEUE, 'In Queue'),
         (COMPLETED, 'Completed'),
+        (SKIP, 'Skip'),
         (ERROR, 'Errored')
     )
     status = models.CharField(
@@ -37,7 +47,6 @@ class DownloadBase(TimeStampedModel):
     target_type = models.CharField(max_length=25, choices=target_choices)
     category = models.ForeignKey(
         VideoCategory, on_delete=models.SET_NULL, null=True)
-
     title = models.CharField(
         max_length=500, blank=True,
         help_text='Should Auto-populate if you don\'t fill it in.')
@@ -97,7 +106,7 @@ class Playlist(DownloadBase):
         return videos + data['items']
 
     def save(self, *args, **kwargs):
-        if self.id:
+        if self.id or self.target_type == Playlist.TARGET_VIDEO:
             return super().save(*args, **kwargs)
 
         playlist = super().save(*args, **kwargs)
@@ -120,7 +129,7 @@ class Playlist(DownloadBase):
         return playlist
 
 
-class Channel(TimeStampedModel):
+class Channel(NameTemplateModel, TimeStampedModel):
     target = models.CharField(max_length=1000)
     TARGET_YOUTUBE = 'youtube'
     target_choices = (

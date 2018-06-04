@@ -7,7 +7,10 @@ from .tasks import get_single_video
 class VideoForm(forms.ModelForm):
     class Meta:
         model = Video
-        fields = ['status', 'target', 'target_type', 'category', 'title']
+        fields = [
+            'status', 'target', 'target_type', 'category', 'title',
+            'name_template'
+        ]
 
 
 class PlaylistForm(forms.ModelForm):
@@ -15,7 +18,7 @@ class PlaylistForm(forms.ModelForm):
         model = Playlist
         fields = [
             'status', 'target', 'target_type', 'category', 'title',
-            'subscribed', 'download'
+            'subscribed', 'download', 'name_template'
         ]
 
 

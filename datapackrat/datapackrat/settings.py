@@ -158,7 +158,7 @@ STATICFILES_DIRS = (
 
 
 # Application Settings
-DOWNLOAD_BASE = '~/Movies/Downloads/{category}'
+DOWNLOAD_BASE = '~/Movies/Downloads/'
 DOWNLOAD_FOLDER = '{}/%(uploader)s/'.format(DOWNLOAD_BASE)
 DOWNLOAD_FILE_FORMAT = '%(uploader)s - %(title)s.%(ext)s'
 DOWNLOAD_LOCATION = DOWNLOAD_FOLDER + DOWNLOAD_FILE_FORMAT
