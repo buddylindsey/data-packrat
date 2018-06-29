@@ -59,6 +59,7 @@ class Video(DownloadBase):
     playlist = models.ForeignKey(
         'videos.Playlist', null=True, blank=True, on_delete=models.SET_NULL,
         related_name='videos')
+    order = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return self.target
@@ -123,6 +124,7 @@ class Playlist(DownloadBase):
                 video.category = self.category
                 video.target_type = self.target_type
                 video.status = self.status
+                video.order = int(item['snippet']['position']) + 1
                 video.save()
             self.videos.add(video)
 

@@ -17,7 +17,8 @@ class GetSingleVideo:
     def get_location(self):
         string_kwargs = {
             'category': self.video.category and self.video.category.slug or '',
-            'playlist_slug': self.video.playlist and self.video.playlist.slug or ''
+            'playlist_slug': self.video.playlist and self.video.playlist.slug or '',
+            'playlist_video_order': self.video.order or '',
         }
 
         location = self.video.name_template.template().format(**string_kwargs)
